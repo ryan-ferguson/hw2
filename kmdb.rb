@@ -87,7 +87,7 @@ Role.destroy_all
 new_studio = Studio.new
 new_studio ["name"] = "Warner Bros."
 new_studio.save
-puts new_studio.inspect
+# puts new_studio.inspect
 
 WarnerBros = Studio.find_by({"name" => "Warner Bros."})
 
@@ -272,6 +272,17 @@ puts ""
 # Query the movies data and loop through the results to display the movies output.
 # TODO!
 
+movies = Movie.where({"studio_id" => WarnerBros["id"]})
+studios = Studio.find_by({"name" => "Warner Bros."})
+
+for movie in movies
+    title = movie["title"]
+    year = movie["year_released"]
+    rating = movie["rated"]
+    studio_name = studios["name"]
+    puts "#{title} #{year} #{rating} #{studio_name}"
+end
+
 # Prints a header for the cast output
 puts ""
 puts "Top Cast"
@@ -280,3 +291,10 @@ puts ""
 
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
+
+actors = Actor.where({"id" => movie["actor_id"]})
+
+for movie in movies
+name = actors["name"]
+puts "#{movie["title"]} #{"name"}"
+end
