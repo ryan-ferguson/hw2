@@ -202,7 +202,6 @@ new_role ["movie_id"] = the_dark_knight["id"]
 new_role ["actor_id"] = michael["id"]
 new_role.save
 
-
 new_role = Role.new
 new_role ["character_name"] = "Ra's Al Ghul"
 new_role ["movie_id"] = batman_begins["id"]
@@ -263,7 +262,6 @@ new_role ["movie_id"] = the_dark_knight_rises["id"]
 new_role ["actor_id"] = joseph["id"]
 new_role.save
 
-
 # Prints a header for the movies output
 puts "Movies"
 puts "======"
@@ -292,9 +290,15 @@ puts ""
 # Query the cast data and loop through the results to display the cast output for each movie.
 # TODO!
 
-actors = Actor.where({"id" => movie["actor_id"]})
+actors = Actor.all
 
-for movie in movies
-name = actors["name"]
-puts "#{movie["title"]} #{"name"}"
-end
+for actor in actors
+    roles = Role.where("actor_id" => actor["id"])
+    for role in roles 
+      movie = Movie.find(role.movie_id)
+      puts "#{movie.title} #{actor.name} #{role.character_name}"
+    end
+  end
+
+
+
